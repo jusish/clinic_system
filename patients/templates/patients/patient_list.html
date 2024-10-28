@@ -1,0 +1,17 @@
+{% extends 'patients/base.html' %}
+
+{% block content %}
+<h2>Patients</h2>
+<a href="{% url 'patients:create_patient' %}" class="btn btn-primary">Add Patient</a>
+<div class="patient-list">
+    {% for patient in patients %}
+    <div class="card">
+        <h3>{{ patient.name }}</h3>
+        <p>Date of Birth: {{ patient.dob }}</p>
+        <p>Contact Info: {{ patient.contact_info }}</p>
+        <a href="{% url 'patients:update_patient' patient.id %}" class="btn btn-primary">Edit</a>
+        <a href="{% url 'patients:delete_patient' patient.id %}" class="btn btn-primary">Delete</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

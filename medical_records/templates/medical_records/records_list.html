@@ -1,0 +1,19 @@
+{% extends 'medical_records/base.html' %}
+
+{% block content %}
+<h2>Medical Records</h2>
+<a href="{% url 'create_record' %}" class="btn btn-primary">Add Record</a>
+<div class="records-list">
+    {% for record in records %}
+    <div class="card">
+        <h3>{{ record.patient.name }}</h3>
+        <p>Doctor: {{ record.doctor.user.username }}</p>
+        <p>Diagnosis: {{ record.diagnosis }}</p>
+        <p>Treatment: {{ record.treatment }}</p>
+        <p>Date: {{ record.date }}</p>
+        <a href="{% url 'update_record' record.id %}" class="btn btn-primary">Edit</a>
+        <a href="{% url 'delete_record' record.id %}" class="btn btn-primary">Delete</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

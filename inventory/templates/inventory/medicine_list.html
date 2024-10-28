@@ -1,0 +1,17 @@
+{% extends 'inventory/base.html' %}   
+{% block title %}Medicine Inventory{% endblock %}
+
+{% block content %}
+<h2>Medicine Inventory</h2>
+<a href="{% url 'create_medicine' %}" class="btn btn-primary">Add Medicine</a>
+<div class="medicine-list">
+    {% for medicine in medicines %}
+    <div class="card">
+        <h3>{{ medicine.name }}</h3>
+        <p>Quantity: {{ medicine.quantity }}</p>
+        <a href="{% url 'update_medicine' medicine.id %}" class="btn btn-primary">Edit</a>
+        <a href="{% url 'delete_medicine' medicine.id %}" class="btn btn-primary">Delete</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

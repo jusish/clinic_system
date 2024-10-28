@@ -1,0 +1,17 @@
+{% extends 'billing/base.html' %}   
+
+{% block content %}
+<h2>Billing Records</h2>
+<a href="{% url 'create_billing' %}" class="btn btn-primary">Add Billing Record</a>
+<div class="billing-list">
+    {% for bill in bills %}
+    <div class="card">
+        <h3>{{ bill.patient.name }}</h3>
+        <p>Total Cost: {{ bill.total_cost }}</p>
+        <p>Date: {{ bill.date }}</p>
+        <a href="{% url 'update_billing' bill.id %}" class="btn btn-primary">Edit</a>
+        <a href="{% url 'delete_billing' bill.id %}" class="btn btn-primary">Delete</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
