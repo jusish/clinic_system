@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Patient
 from .forms import PatientForm
+from django.core.paginator import Paginator
+
 
 @login_required
 def create_patient(request):
@@ -16,8 +18,11 @@ def create_patient(request):
 
 @login_required
 def patient_list(request):
-    patients = Patient.objects.all()
-    return render(request, 'patients/patient_list.html', {'patients': patients})
+    patients_list = Patient.objects.all()
+    paginator = Paginator(patients_list, 10)  # Show 10 patients per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'patients/patient_list.html', {'page_obj': page_obj})
 
 @login_required
 def update_patient(request, patient_id):

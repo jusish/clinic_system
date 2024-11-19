@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from .models import BillingRecord
 from .forms import BillingRecordForm
 
@@ -16,8 +17,12 @@ def create_billing(request):
 
 @login_required
 def billing_list(request):
-    bills = BillingRecord.objects.all()
-    return render(request, 'billing/billing_list.html', {'bills': bills})
+    bills_list = BillingRecord.objects.all()
+    paginator = Paginator(bills_list, 5)  # Show 10 bills per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'billing/billing_list.html', {'page_obj': page_obj})
+
 
 @login_required
 def update_billing(request, billing_id):

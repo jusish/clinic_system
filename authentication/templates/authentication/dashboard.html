@@ -6,22 +6,38 @@
 <div class="dashboard-container">
     <h1 class="dashboard-title">Doctor's Dashboard</h1>
     <div class="dashboard-stats">
-        <div class="stat-card">
-            <h2>Total Patients</h2>
-            <p>{{ total_patients }}</p>
-        </div>
-        <div class="stat-card">
-            <h2>Total Billing Records</h2>
-            <p>{{ total_billing_records }}</p>
-        </div>
-        <div class="stat-card">
-            <h2>Total Medicines</h2>
-            <p>{{ total_medicines }}</p>
-        </div>
-        <div class="stat-card">
-            <h2>Total Medical Records</h2>
-            <p>{{ total_medical_records }}</p>
-        </div>
+
+        <a href="{% url 'patients:patient_list' %}" style="text-decoration: none;">
+            <div class="stat-card">
+                <h2>Total Patients</h2>
+                <p>{{ total_patients }}</p>
+            </div>
+        </a>
+        
+
+        <a href="{% url 'billing_list' %}" style="text-decoration: none;">
+            <div class="stat-card">
+                <h2>Total Billing Records</h2>
+                <p>{{ total_billing_records }}</p>
+            </div>
+        </a>
+        
+
+        <a href="{% url 'medicine_list' %}" style="text-decoration: none;">
+            <div class="stat-card" >
+                <h2>Total Medicines</h2>
+                <p>{{ total_medicines }}</p>
+            </div>
+        </a>
+        
+
+
+        <a href="{% url 'records_list' %}" style="text-decoration: none;">
+            <div class="stat-card">
+                <h2>Total Medical Records</h2>
+                <p>{{ total_medical_records }}</p>
+            </div>
+        </a>
     </div>
 
     <div class="chart-container">
@@ -86,26 +102,28 @@
     const patientsData = JSON.parse(document.getElementById('patients-data').textContent);
     const patientsLabels = JSON.parse(document.getElementById('patients-labels').textContent);
 
-    // Create the chart
+    // Create the bar chart
     const ctx = document.getElementById('patientsChart').getContext('2d');
     new Chart(ctx, {
-        type: 'line',
+        type: 'line',  // Change the chart type to line
         data: {
-            labels: patientsLabels,
+            labels: patientsLabels,  // Labels for the chart (days or time periods)
             datasets: [{
                 label: 'Patients Treated',
-                data: patientsData,
-                borderColor: '#4A628A',
-                backgroundColor: 'rgba(74, 98, 138, 0.2)',
-                borderWidth: 2,
-                fill: true
+                data: patientsData,  // The number of patients treated
+                backgroundColor: '#4A628A',  // Bar color
+                borderColor: '#4A628A',  // Border color
+                borderWidth: 1
             }]
         },
         options: {
             responsive: true,
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1  // Adjust step size for better readability if necessary
+                    }
                 }
             }
         }

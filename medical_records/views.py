@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .models import MedicalRecord
 from .forms import MedicalRecordForm
+from django.core.paginator import Paginator
 
 @login_required
 def create_record(request):
@@ -17,8 +18,12 @@ def create_record(request):
 
 @login_required
 def records_list(request):
-    records = MedicalRecord.objects.all()
-    return render(request, 'medical_records/records_list.html', {'records': records})
+    records_list = MedicalRecord.objects.all()
+    paginator = Paginator(records_list, 10)  # Show 10 records per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'medical_records/records_list.html', {'page_obj': page_obj})
+
 
 @login_required
 def update_record(request, record_id):

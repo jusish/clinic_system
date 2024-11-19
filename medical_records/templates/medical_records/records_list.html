@@ -4,7 +4,7 @@
 <h2>Medical Records</h2>
 <a href="{% url 'create_record' %}" class="btn btn-primary">Add Record</a>
 <div class="records-list">
-    {% for record in records %}
+    {% for record in page_obj %}
     <div class="card">
         <h3>{{ record.patient.name }}</h3>
         <p>Doctor: {{ record.doctor.user.username }}</p>
@@ -15,5 +15,23 @@
         <a href="{% url 'delete_record' record.id %}" class="btn btn-primary">Delete</a>
     </div>
     {% endfor %}
+</div>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+        
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+        
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
 </div>
 {% endblock %}

@@ -1,107 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Clinic Management System{% endblock %}</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-        .navbar {
-            background-color: #DFF2EB;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #4A628A;
-            text-decoration: none;
-        }
-        .navbar-nav {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-        }
-        .nav-item {
-            margin-left: 1rem;
-        }
-        .nav-link {
-            color: #4A628A;
-            text-decoration: none;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        .btn {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            text-decoration: none;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+      }
+      .navbar {
+        background-color: #dff2eb;
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .navbar-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #4a628a;
+        text-decoration: none;
+      }
+      .navbar-nav {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+      }
+      .nav-item {
+        margin-left: 1rem;
+      }
+      .nav-link {
+        color: #4a628a;
+        text-decoration: none;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      .btn {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+      }
 
-        .btn-danger {
-            background-color: #FF0000;
-            color: white;
-        }
-        
-        .btn-primary {
-            background-color: #4A628A;
-            color: white;
-        }
-        .card {
-            background-color: white;
-            border: 3px solid #B9E5E8;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-        .form-container {
-            max-width: 400px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .form-container input {
-            width: 100%;
-            padding: 0.5rem;
-            margin-bottom: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .form-container input:focus {
-            border-color: #DFF2EB;
-            outline: none;
-        }
+      .btn-danger {
+        background-color: #ff0000;
+        color: white;
+      }
+
+      .btn-primary {
+        background-color: #4a628a;
+        color: white;
+      }
+      .card {
+        background-color: white;
+        border: 3px solid #b9e5e8;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+      }
+      .form-container {
+        max-width: 400px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .form-container input {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      .form-container input:focus {
+        border-color: #dff2eb;
+        outline: none;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <nav class="navbar">
-        <a href="{% url 'patients:patient_list' %}" class="navbar-brand">Clinic Management System</a>
-        <ul class="navbar-nav">
-            <li class="nav-item"><a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a></li>
-            <li class="nav-item"><a href="{% url 'patients:patient_list' %}" class="nav-link">Patients</a></li>
-            <li class="nav-item"><a href="{% url 'billing_list' %}" class="nav-link">Billing</a></li>
-            <li class="nav-item"><a href="{% url 'records_list' %}" class="nav-link">Records</a></li>
-            <li class="nav-item"><a href="{% url 'medicine_list' %}" class="nav-link">Inventory</a></li>
-            <li class="nav-item"><a href="{% url 'logout' %}" class="btn btn-primary">Logout</a></li>
-        </ul>
+      <a href="{% url 'dashboard' %}" class="navbar-brand"
+        >Clinic Management System</a
+      >
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'patients:patient_list' %}" class="nav-link"
+            >Patients</a
+          >
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'billing_list' %}" class="nav-link">Billing</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'records_list' %}" class="nav-link">Records</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'medicine_list' %}" class="nav-link">Inventory</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+        </li>
+      </ul>
     </nav>
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
-</body>
+    <div class="container">{% block content %}{% endblock %}</div>
+  </body>
 </html>

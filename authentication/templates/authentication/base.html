@@ -84,7 +84,7 @@
 </head>
 <body>
     <nav class="navbar">
-        <a href="{% url 'patients:patient_list' %}" class="navbar-brand">Clinic Management System</a>
+        <a href="{% url 'dashboard' %}" class="navbar-brand">Clinic Management System</a>
         <ul class="navbar-nav">
             {% if user.is_authenticated %}
                 <li class="nav-item"><a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a></li>

@@ -1,10 +1,10 @@
-{% extends 'billing/base.html' %}   
+{% extends 'billing/base.html' %}
 
 {% block content %}
 <h2>Billing Records</h2>
 <a href="{% url 'create_billing' %}" class="btn btn-primary">Add Billing Record</a>
 <div class="billing-list">
-    {% for bill in bills %}
+    {% for bill in page_obj %}
     <div class="card">
         <h3>{{ bill.patient.name }}</h3>
         <p>Total Cost: {{ bill.total_cost }}</p>
@@ -13,5 +13,23 @@
         <a href="{% url 'delete_billing' bill.id %}" class="btn btn-primary">Delete</a>
     </div>
     {% endfor %}
+</div>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+        
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+        
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
 </div>
 {% endblock %}
