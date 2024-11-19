@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from .models import Medicine
 from .forms import MedicineForm
 
+
+
 @login_required
 def create_medicine(request):
     if request.method == 'POST':

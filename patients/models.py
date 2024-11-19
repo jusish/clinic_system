@@ -6,3 +6,6 @@ class Patient(models.Model):
     dob = models.DateField()
     contact_info = models.CharField(max_length=100)
     date_attended = models.DateField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.name

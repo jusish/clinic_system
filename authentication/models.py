@@ -10,7 +10,7 @@ class Doctor(AbstractUser):
         ('orthopedics', 'Orthopedics'),
     ]
     
-    specialization = models.CharField(choices=SPECIALIZATION_CHOICES)
+    specialization = models.CharField(choices=SPECIALIZATION_CHOICES, max_length=200)
 
     def __str__(self):
         return f'{self.username} - {self.specialization}'

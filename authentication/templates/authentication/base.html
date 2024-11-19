@@ -87,6 +87,7 @@
         <a href="{% url 'patients:patient_list' %}" class="navbar-brand">Clinic Management System</a>
         <ul class="navbar-nav">
             {% if user.is_authenticated %}
+                <li class="nav-item"><a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a></li>
                 <li class="nav-item"><a href="{% url 'patients:patient_list' %}" class="nav-link">Patients</a></li>
                 <li class="nav-item"><a href="{% url 'billing_list' %}" class="nav-link">Billing</a></li>
                 <li class="nav-item"><a href="{% url 'records_list' %}" class="nav-link">Records</a></li>

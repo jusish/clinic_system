@@ -9,6 +9,8 @@ class DoctorSignupForm(UserCreationForm):
         model = Doctor
         fields = ('username', 'email','password1', 'password2', 'specialization')
         
+        
+    
     # def save(self, commit=True):
     #     user = super().save(commit=False)
     #     if commit:
