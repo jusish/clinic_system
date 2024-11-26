@@ -15,4 +15,4 @@ class MedicalRecord(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     diagnosis = models.TextField()
     treatment = models.TextField()
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True, null=True)
