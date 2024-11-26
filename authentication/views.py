@@ -3,7 +3,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.utils import timezone
-
+from django.db.models import Count, Sum
+import json
 
 from billing.models import BillingRecord
 from inventory.models import Medicine
@@ -57,29 +58,67 @@ def logout_view(request):
 
 @login_required
 def dashboard(request):
-    # Fetching data from different apps
+    # Basic stats
     total_patients = Patient.objects.count()
     total_billing_records = BillingRecord.objects.count()
     total_medicines = Medicine.objects.count()
     total_medical_records = MedicalRecord.objects.count()
     
-    
+    # Get last 7 days data for line chart
     today = timezone.now()
     days = [(today - timedelta(days=i)).date() for i in range(7)]
     treated_patients = []
+    
     for day in days:
-        count = MedicalRecord.objects.filter(date=day).count()
+        count = MedicalRecord.objects.filter(date__date=day).count()
         treated_patients.append(count)
 
+    # Monthly revenue data for bar chart (last 6 months)
+    months = [(today - timedelta(days=30*i)) for i in range(6)]
+    monthly_revenue = []
+    month_labels = []
+    
+    for month in months:
+        revenue = BillingRecord.objects.filter(
+            date__year=month.year,
+            date__month=month.month
+        ).aggregate(Sum('total_cost'))['total_cost__sum'] or 0
+        monthly_revenue.append(float(revenue))
+        month_labels.append(month.strftime('%B %Y'))
 
+    # Medicine inventory status for doughnut chart
+    low_stock = Medicine.objects.filter(quantity__lt=10).count()
+    adequate_stock = Medicine.objects.filter(quantity__gte=10, quantity__lt=50).count()
+    high_stock = Medicine.objects.filter(quantity__gte=50).count()
 
-    # Passing data to the template
+    # Recent activity for timeline
+    recent_records = MedicalRecord.objects.select_related('patient', 'doctor').order_by('-date')[:5]
+    recent_activity = [{
+        'type': 'medical_record',
+        'patient': record.patient.name,
+        'doctor': record.doctor.username,
+        'date': record.date.strftime('%Y-%m-%d %H:%M'),
+        'action': 'Medical consultation'
+    } for record in recent_records]
+
     context = {
         'total_patients': total_patients,
         'total_billing_records': total_billing_records,
         'total_medicines': total_medicines,
         'total_medical_records': total_medical_records,
-        'patients_labels': [day.strftime('%A') for day in days][::-1],  # Labels for chart (last 7 days)
-        'patients_data': treated_patients[::-1],  # Reverse for chronological order
+        
+        # Line chart data
+        'patients_data': json.dumps(treated_patients[::-1]),
+        'patients_labels': json.dumps([day.strftime('%Y-%m-%d') for day in days][::-1]),
+        
+        # Bar chart data
+        'monthly_revenue': json.dumps(monthly_revenue[::-1]),
+        'month_labels': json.dumps(month_labels[::-1]),
+        
+        # Doughnut chart data
+        'inventory_data': json.dumps([low_stock, adequate_stock, high_stock]),
+        
+        # Recent activity
+        'recent_activity': recent_activity,
     }
     return render(request, 'authentication/dashboard.html', context)
