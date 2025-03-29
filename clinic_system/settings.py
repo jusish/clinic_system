@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'medical_records',
     'billing',
     'inventory',
+    'ml_system',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -94,8 +95,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'clinic_db',
-        'USER': 'postgres',  # usually 'postgres'
-        'PASSWORD': 'justin',
+        'USER': 'justin',  # usually 'postgres'
+        'PASSWORD': 'dev',
         'HOST': 'localhost',
         'PORT': '5432',  # Default PostgreSQL port
     }

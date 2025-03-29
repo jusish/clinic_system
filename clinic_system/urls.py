@@ -23,5 +23,6 @@ urlpatterns = [
     path('patients/', include('patients.urls')),  
     path('records/', include('medical_records.urls')), 
     path('billing/', include('billing.urls')),
-    path('inventory/', include('inventory.urls')), 
+    path('inventory/', include('inventory.urls')),
+    path('predictions/', include('ml_system.urls')),
 ]
